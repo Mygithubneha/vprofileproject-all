@@ -42,3 +42,4 @@ stage('Test') {
                 sh 'mvn -s settings.xml checkstyle:checkstyle'
             }
         }
+    }
