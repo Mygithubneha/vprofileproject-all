@@ -17,29 +17,39 @@ pipeline {
         NEXUS_LOGIN = 'nexuslogin'
     }
 
-    stage('Build') {
+    stages{
+        
+        stage('BUILD'){
             steps {
-                sh 'mvn clean package'
-                sh 'mvn clean install'
-                sh 'mvn -s settings.xml -DskipTests install'
+                sh 'mvn clean install -DskipTests'
             }
             post {
                 success {
-                    echo "Now Archiving."
-                    archiveArtifacts artifacts: '**/*.war'
+                    echo 'Now Archiving...'
+                    archiveArtifacts artifacts: '**/target/*.war'
                 }
             }
         }
 
-    stage('Test') {
-           steps {
-            sh 'mvn test'
-           }
-        }
-        
-        stage('Checkstyle Analysis'){
+	stage('UNIT TEST'){
             steps {
-                sh 'mvn -s settings.xml checkstyle:checkstyle'
+                sh 'mvn test'
             }
         }
-    }
+
+	stage('INTEGRATION TEST'){
+            steps {
+                sh 'mvn verify -DskipUnitTests'
+            }
+        }
+		
+        stage ('CODE ANALYSIS WITH CHECKSTYLE'){
+            steps {
+                sh 'mvn checkstyle:checkstyle'
+            }
+            post {
+                success {
+                    echo 'Generated Analysis Result'
+                }
+            }
+        }
