@@ -31,14 +31,14 @@ pipeline {
             }
         }
         stage('Test')
-            steps {
-                sh 'mvn test'
-            }
-        }
+                  steps {
+                       sh 'mvn test'
+                    }
+                }
 
-        stage('Checkstyle Analysis') {
-            steps {
-                sh 'mvn -s settings.xml checkstyle:checkstyle'
+                stage('Checkstyle Analysis') {
+                   steps {
+                       sh 'mvn -s settings.xml checkstyle:checkstyle'
+                   }
+                }
             }
-        }
-    }
