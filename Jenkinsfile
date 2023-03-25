@@ -17,8 +17,7 @@ pipeline {
         NEXUS_LOGIN = 'nexuslogin'
     }
 
-    stages {
-        stage('Build') {
+    stage('Build') {
             steps {
                 sh 'mvn clean package'
                 sh 'mvn clean install'
@@ -31,15 +30,15 @@ pipeline {
                 }
             }
         }
-        stage('Test')
-                  steps {
-                       sh 'mvn test'
-                    }
-                }
 
-                stage('Checkstyle Analysis') {
-                   steps {
-                       sh 'mvn -s settings.xml checkstyle:checkstyle'
-                   }
-                }
+stage('Test') {
+           steps {
+            sh 'mvn test'
+           }
+        }
+        
+        stage('Checkstyle Analysis'){
+            steps {
+                sh 'mvn -s settings.xml checkstyle:checkstyle'
             }
+        }
