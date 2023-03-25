@@ -31,7 +31,7 @@ pipeline {
             }
         }
 
-stage('Test') {
+    stage('Test') {
            steps {
             sh 'mvn test'
            }
