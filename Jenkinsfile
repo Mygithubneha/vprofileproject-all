@@ -31,11 +31,12 @@ pipeline {
 		      archiveArtifacts artifacts: '**/*.war'
 		 }
              }
-
-	}
         
 	stage('Unit test'){
 	     steps {
 	     	 sh 'mvn test'
  	      }
 	}
+    }
+}	
+	    
